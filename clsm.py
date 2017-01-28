@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import argparse
+from modelWrapper import *
+from myPrompt import *
 
 __version__ = '1.0.0'
 
@@ -11,9 +13,11 @@ def main():
     parser.add_argument('-s', '--src', metavar='src', type=str, help='source file name')
     parser.add_argument('-d', '--dst', metavar='dst', type=str, help='output file name')
 
-    args = parser.parse_args()
-    print(args.src)
-    print(args.dst)
+    args = vars(parser.parse_args())
+    modelwrapper = modelWrapper.createModelWrapper(**args)
+
+    prompt = myPrompt()
+    prompt.cmdloop()
 
 if __name__ == '__main__':
     main()
