@@ -8,6 +8,6 @@ __license__ = 'MIT'
 from clsm.main import clsmMain
 
 def main():
-   global clsm
+#   global clsm
    clsm = clsmMain()
    clsm.run()

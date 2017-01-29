@@ -4,13 +4,13 @@ import sys
 sys.path.append("/usr/local/lib/python2.7/site-packages/libsbml")
 from libsbml import *
 
-class modelWrapper:
+class ModelWrapper:
     def __init__(self, src=None, dst='output.xml'):
         if(src == None):
             self.__createDocument()
         else:
             self.document = readSBML(src)
-            self.model = document.getModel()
+            self.model = self.document.getModel()
 
         self.dst = dst
 
@@ -20,4 +20,4 @@ class modelWrapper:
 
     @staticmethod
     def createModelWrapper(**kwargs):
-        return modelWrapper(**kwargs)
+        return ModelWrapper(**kwargs)

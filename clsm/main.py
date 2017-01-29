@@ -2,10 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import argparse
-from modelWrapper import *
-from myPrompt import *
 #from clsm import __version__ as VERSION
 import readline
+from clsm.modelwrapper import ModelWrapper
 
 class clsmMain():
     def __init__(self):
@@ -22,8 +21,9 @@ class clsmMain():
     def parse_args(self):
         args = self.init_args().parse_args()
         args = vars(args)
-        self.modelwrapper = modelWrapper.createModelWrapper(**args)
+        self.modelWrapper = ModelWrapper.createModelWrapper(**args)
 
     def run(self):
-        self.prompt = myPrompt(modelWrapper)
+        from clsm.myprompt import MyPrompt
+        self.prompt = MyPrompt(self.modelWrapper)
         self.prompt.cmdloop()
