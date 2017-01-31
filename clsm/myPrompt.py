@@ -27,7 +27,10 @@ class MyPrompt(Cmd):
 
     def do_print(self, line):
         line = line.split()
-        self.modelWrapper.printAttribute(target=line)
+        if len(line) == 0:
+            self.modelWrapper.printAttribute()
+        else:
+            self.modelWrapper.printAttribute(target=line)
 
     def help_print(self):
         print "print help"

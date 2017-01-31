@@ -6,7 +6,7 @@ from libsbml import *
 
 class ModelWrapper:
     def __init__(self, src=None, dst='output.xml'):
-        if(src == None):
+        if(src is None):
             self.__createDocument()
         else:
             self.document = readSBML(src)
@@ -25,12 +25,12 @@ class ModelWrapper:
     def printAttribute(self, target=['document']):
         for i in target:
             if i == 'document':
-                writeSBMLToString(self.document)
+                print writeSBMLToString(self.document)
             elif i == 'model':
-                writeSBMLToString(self.document.getModel())
+                print self.model.toSBML()
             else:
-                element = document.getElementBySId(i)
-                if element  is None:
+                element = self.document.getElementBySId(i)
+                if element is None:
                     print 'attribute ', i , ' not found'
                 else:
-                    writeSBMLToString(i)
+                    print element.toSBML()
