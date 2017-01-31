@@ -21,3 +21,16 @@ class ModelWrapper:
     @staticmethod
     def createModelWrapper(**kwargs):
         return ModelWrapper(**kwargs)
+
+    def printAttribute(self, target=['document']):
+        for i in target:
+            if i == 'document':
+                writeSBMLToString(self.document)
+            elif i == 'model':
+                writeSBMLToString(self.document.getModel())
+            else:
+                element = document.getElementBySId(i)
+                if element  is None:
+                    print 'attribute ', i , ' not found'
+                else:
+                    writeSBMLToString(i)

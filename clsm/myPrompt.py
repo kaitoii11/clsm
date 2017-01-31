@@ -20,10 +20,17 @@ class MyPrompt(Cmd):
             print "reading only the first argument"
 
         args = {'src': line[0]}
-        self.modelwrapper = ModelWrapper.createModelWrapper(**args)
+        self.modelWrapper = ModelWrapper.createModelWrapper(**args)
 
     def help_read(self):
         print "read help"
+
+    def do_print(self, line):
+        line = line.split()
+        self.modelWrapper.printAttribute(target=line)
+
+    def help_print(self):
+        print "print help"
 
     def do_exit(self, line):
         return True
