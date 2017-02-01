@@ -28,6 +28,8 @@ class ModelWrapper:
                 print writeSBMLToString(self.document)
             elif i == 'model':
                 print self.model.toSBML()
+            elif hasattr(self.model, 'getListOf' + i.title()):
+                print getattr(self.model, 'getListOf' + i.title())().toSBML()
             else:
                 element = self.document.getElementBySId(i)
                 if element is None:
