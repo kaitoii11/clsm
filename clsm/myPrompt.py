@@ -3,9 +3,11 @@
 
 from cmd import Cmd
 from clsm.modelwrapper import ModelWrapper
+import readline
 
 class MyPrompt(Cmd):
     prompt = '>'
+    readline.parse_and_bind ('tab: complete')
 
     def __init__(self, modelWrapper):
         Cmd.__init__(self)

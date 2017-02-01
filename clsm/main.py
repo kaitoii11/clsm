@@ -3,7 +3,6 @@
 
 import argparse
 #from clsm import __version__ as VERSION
-import readline
 from clsm.modelwrapper import ModelWrapper
 
 class clsmMain():
