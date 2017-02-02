@@ -27,6 +27,10 @@ class MyPrompt(Cmd):
     def help_read(self):
         print "read help"
 
+    def complete_read(self, text, line, start_idx, end_idx):
+        pass
+        # todo
+
     def do_print(self, line):
         line = line.split()
         if len(line) == 0:
@@ -37,6 +41,13 @@ class MyPrompt(Cmd):
     def help_print(self):
         print "print help"
 
+    def complete_print(self, text, line, start_idx, end_idx):
+        elements = self.modelWrapper.model.getListOfAllElements()
+        if text:
+            return [i.getId() for i in elements if i.isSetId() and i.getId().startswith(text)] + filter(lambda n: n.startswith(text), printcompletion)
+        else:
+            return [i.getId() for i in elements if i.isSetId()] + printcompletion
+
     def do_exit(self, line):
         return True
 
@@ -45,3 +56,14 @@ class MyPrompt(Cmd):
 
     def emptyline(self):
         pass
+
+printcompletion = [
+    'Species',
+    'Reactions',
+    'Compartments',
+    'Rules',
+    'Parameters',
+    'UnitDefinitions',
+    'Model',
+    'Document',
+]

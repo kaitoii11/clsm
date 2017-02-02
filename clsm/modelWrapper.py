@@ -24,9 +24,9 @@ class ModelWrapper:
 
     def printAttribute(self, target=['document']):
         for i in target:
-            if i == 'document':
+            if i == 'Document' or i.capitalize() == 'Document':
                 print writeSBMLToString(self.document)
-            elif i == 'model':
+            elif i == 'Model' or i.capitalize() == 'Model' :
                 print self.model.toSBML()
             elif hasattr(self.model, 'getListOf' + i.title()):
                 print getattr(self.model, 'getListOf' + i.title())().toSBML()
