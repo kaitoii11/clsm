@@ -6,7 +6,6 @@ from clsm.modelwrapper import ModelWrapper
 import readline
 import dircache
 
-
 class MyPrompt(Cmd):
     prompt = '>'
     readline.parse_and_bind ('tab: complete')
