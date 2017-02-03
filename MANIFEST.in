@@ -1,0 +1,5 @@
+include MANIFEST.in
+include *.txt
+include setup.py LICENSE README.md
+recursively-include clsm
+global-exclude *.pyc *.bak *~ *.swp
