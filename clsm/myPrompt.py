@@ -4,6 +4,8 @@
 from cmd import Cmd
 from clsm.modelwrapper import ModelWrapper
 import readline
+import dircache
+
 
 class MyPrompt(Cmd):
     prompt = '>'
@@ -27,9 +29,29 @@ class MyPrompt(Cmd):
     def help_read(self):
         print "read help"
 
+    # todo change dircache since it is deprecated in python3
     def complete_read(self, text, line, start_idx, end_idx):
-        pass
-        # todo
+        line = line.split()
+        if len(line) < 2:
+            filename = ''
+            path = './'
+        else:
+            path = line[1]
+            if '/' in path:
+                i = path.rfind('/')
+                filename = path[i+1:]
+                path = path[:i]
+            else:
+                filename = path
+                path = './'
+
+        ls = dircache.listdir(path)
+        ls = ls[:]
+        dircache.annotate(path, ls)
+        if filename == '':
+            return ls
+        else:
+            return [f for f in ls if f.startswith(filename)]
 
     def do_print(self, line):
         line = line.split()
