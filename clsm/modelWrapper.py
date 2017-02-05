@@ -22,6 +22,9 @@ class ModelWrapper:
     def createModelWrapper(**kwargs):
         return ModelWrapper(**kwargs)
 
+    def getListOfAllElements(self):
+        return self.model.getListOfAllElements()
+
     def printAttribute(self, target=['document']):
         for i in target:
             if i == 'Document' or i.capitalize() == 'Document':
@@ -36,3 +39,12 @@ class ModelWrapper:
                     print 'attribute ', i , ' not found'
                 else:
                     print element.toSBML()
+
+    def createSBase(self, sbasetype, sid):
+        sbase = getattr(self.model, 'create' + sbasetype.capitalize())()
+        sbase.setId(sid)
+
+    def removeSBase(self, sid):
+        sbase = self.model.getElementBySId(sid)
+        if sbase is not None:
+            getattr(self.model, 'remove' + sbase.__class__.__name__)(sid)

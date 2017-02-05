@@ -8,7 +8,7 @@ import dircache
 
 class MyPrompt(Cmd):
     prompt = '>'
-    readline.parse_and_bind ('tab: complete')
+    readline.parse_and_bind('tab: complete')
 
     def __init__(self, modelWrapper):
         Cmd.__init__(self)
@@ -63,11 +63,49 @@ class MyPrompt(Cmd):
         print "print help"
 
     def complete_print(self, text, line, start_idx, end_idx):
-        elements = self.modelWrapper.model.getListOfAllElements()
+        elements = self.modelWrapper.getListOfAllElements()
         if text:
             return [i.getId() for i in elements if i.isSetId() and i.getId().startswith(text)] + filter(lambda n: n.startswith(text), printcompletion)
         else:
             return [i.getId() for i in elements if i.isSetId()] + printcompletion
+
+    def do_create(self, line):
+        line = line.split()
+        if len(line) < 2:
+            self.help_create()
+            return
+        sbasetype = line[0]
+        sbaselist = line[1:]
+        for sid in sbaselist:
+            self.modelWrapper.createSBase(sbasetype, sid)
+
+    def help_create(self):
+        print 'help create'
+
+    def complete_create(self, text, lie, start_idx, end_idx):
+        if text:
+            return filter(lambda n: n.startswith(text), printcompletion)
+        else:
+            return printcompletion
+
+    def do_remove(self, line):
+        line = line.split()
+        if len(line) < 1:
+            self.help_remove()
+            return
+
+        for sid in line:
+            self.modelWrapper.removeSBase(sid)
+
+    def help_remove(self):
+        print 'help remove'
+
+    def complete_remove(self, text, line, start_idx, end_idx):
+        elements = self.modelWrapper.getListOfAllElements()
+        if text:
+            return [i.getId() for i in elements if i.isSetId() and i.getId().startswith(text)]
+        else:
+            return [i.getId() for i in elements if i.isSetId()]
 
     def do_exit(self, line):
         return True
