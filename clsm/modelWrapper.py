@@ -48,3 +48,6 @@ class ModelWrapper:
         sbase = self.model.getElementBySId(sid)
         if sbase is not None:
             getattr(self.model, 'remove' + sbase.__class__.__name__)(sid)
+
+    def write(self, path):
+        writeSBMLToFile(self.document, path)

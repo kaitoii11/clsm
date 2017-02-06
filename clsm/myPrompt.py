@@ -107,6 +107,43 @@ class MyPrompt(Cmd):
         else:
             return [i.getId() for i in elements if i.isSetId()]
 
+    def do_write(self, line):
+        line = line.split()
+        if len(line) < 1:
+            self.help_write()
+            return
+        else:
+            for path in line:
+                self.modelWrapper.write(path)
+
+    def help_write(self):
+        print 'write help'
+
+    def complete_write(self, text, line, start_idx, end_idx):
+        line = line.split()
+        if len(line) < 2:
+            filename = ''
+            path = './'
+        else:
+            path = line[1]
+            if '/' in path:
+                i = path.rfind('/')
+                filename = path[i+1:]
+                path = path[:i]
+            else:
+                filename = path
+                path = './'
+
+        ls = dircache.listdir(path)
+        ls = ls[:]
+        dircache.annotate(path, ls)
+        ls = filter(lambda n: n.endswith('/'),ls)
+        if filename == '':
+            return ls
+        else:
+            return [f for f in ls if f.startswith(filename)]
+
+
     def do_exit(self, line):
         return True
 
